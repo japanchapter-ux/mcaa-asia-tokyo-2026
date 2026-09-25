@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCAA Asia Connect - Konnichiwa Tokyo 2026</title>
+  <style>
+    :root {
+      --mcaa-blue: #0e3672;
+      --mcaa-blue-light: #1a4f9c;
+      --mcaa-blue-soft: #f0f4fa;
+      --mcaa-gold: #c38214;
+      --mcaa-gold-light: #fef8eb;
+      --japan-red: #bc002d;
+      --japan-red-soft: #fdf2f4;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --card-bg: #ffffff;
+      --page-bg: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--page-bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 12px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border-color);
+    }
+
+    /* HERO HEADER */
+    .hero {
+      background: linear-gradient(135deg, #0a254e 0%, #0e3672 55%, #184282 100%);
+      color: #ffffff;
+      padding: 40px 32px 34px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(195, 130, 20, 0.25);
+      border: 1px solid var(--mcaa-gold);
+      color: #ffd875;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 4.5vw, 42px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h2 {
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 600;
+      color: #ffde8a;
+      margin-bottom: 14px;
+    }
+
+    .hero-meta {
+      font-size: 14px;
+      color: #cbd5e1;
+      font-weight: 400;
+    }
+
+    .hero-meta span {
+      margin: 0 8px;
+    }
+
+    /* COUNTDOWN SECTION */
+    .countdowns-section {
+      background: #ffffff;
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .countdowns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .countdown-card {
+      background: var(--page-bg);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+      border-top: 5px solid var(--mcaa-blue);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+      border-left: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .countdown-card.deadline {
+      border-top-color: var(--japan-red);
+      background: var(--japan-red-soft);
+    }
+
+    .countdown-card .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 6px;
+    }
+
+    .countdown-card.deadline .badge {
+      background: rgba(188, 0, 45, 0.15);
+      color: var(--japan-red);
+    }
+
+    .countdown-card.event .badge {
+      background: rgba(14, 54, 114, 0.15);
+      color: var(--mcaa-blue);
+    }
+
+    .countdown-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+
+    .countdown-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .timer-units {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .timer-box {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px 4px;
+      min-width: 58px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+
+    .timer-num {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--mcaa-blue);
+      line-height: 1.1;
+    }
+
+    .countdown-card.deadline .timer-num {
+      color: var(--japan-red);
+    }
+
+    .timer-lbl {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .expired-box {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--japan-red);
+      padding: 14px;
+    }
+
+    /* CTA BAR */
+    .cta-banner {
+      text-align: center;
+      padding: 22px 20px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .btn-register {
+      display: inline-block;
+      background: var(--japan-red);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 13px 34px;
+      border-radius: 30px;
+      box-shadow: 0 4px 14px rgba(188, 0, 45, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-register:hover {
+      background: #980024;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(188, 0, 45, 0.4);
+    }
+
+    .cta-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* CONTENT BODY */
+    .content-body {
+      padding: 34px 28px;
+    }
+
+    .section-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--mcaa-blue);
+      position: relative;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 60px;
+      height: 2px;
+      background: var(--mcaa-gold);
+    }
+
+    .lead-p {
+      font-size: 15px;
+      color: #334155;
+      margin-bottom: 26px;
+    }
+
+    /* SPEAKERS GRID */
+    .speakers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .speaker-card {
+      background: var(--page-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 18px 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .speaker-icon {
+      width: 44px;
+      height: 44px;
+      background: #e2eaf5;
+      color: var(--mcaa-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .speaker-info h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+
+    .speaker-role {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--mcaa-blue);
+      margin-bottom: 3px;
+      line-height: 1.35;
+    }
+
+    .speaker-affil {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* AGENDA TABS */
+    .agenda-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .agenda-tab-btn {
+      flex: 1;
+      padding: 12px 16px;
+      background: var(--page-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .agenda-tab-btn.active {
+      background: var(--mcaa-blue);
+      color: #ffffff;
+      border-color: var(--mcaa-blue);
+      box-shadow: 0 3px 8px rgba(14, 54, 114, 0.25);
+    }
+
+    .agenda-day {
+      display: none;
+    }
+
+    .agenda-day.active {
+      display: block;
+    }
+
+    .agenda-day-theme {
+      background: var(--mcaa-blue-soft);
+      border-left: 4px solid var(--mcaa-blue);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--mcaa-blue);
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 16px;
+    }
+
+    /* AGENDA TABLE / LIST */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 105px 1fr;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 16px;
+      gap: 14px;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+
+    .timeline-item:hover {
+      border-color: #cbd5e1;
+    }
+
+    .timeline-item.highlight {
+      background: #fafcff;
+      border-left: 4px solid var(--mcaa-blue);
+    }
+
+    .timeline-item.break {
+      background: #fffdf8;
+      border-left: 4px solid var(--mcaa-gold);
+    }
+
+    .timeline-time {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--mcaa-blue);
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .timeline-content h5 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .timeline-speaker {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0369a1;
+      margin-bottom: 4px;
+    }
+
+    .timeline-details {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* OUTCOMES & FOOTER */
+    .outcomes-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .outcomes-list li {
+      background: var(--page-bg);
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #334155;
+    }
+
+    .outcomes-list strong {
+      display: block;
+      color: var(--mcaa-blue);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .footer {
+      background: #0a254e;
+      color: #94a3b8;
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 12px;
+    }
+
+    .footer p {
+      margin-bottom: 4px;
+    }
+
+    .footer a {
+      color: #ffd875;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .content-body {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HERO HEADER -->
+    <header class="hero">
+      <div class="hero-badge">Marie Curie Alumni Association &bull; 30th Anniversary</div>
+      <h1>MCAA Asia Connect</h1>
+      <h2>“Konnichiwa Tokyo 2026”</h2>
+      <p class="hero-meta">
+        <strong>Tokyo, Japan</strong> &bull; Regional Meeting: Japan, India, China, Southeast Asia &amp; Oceania
+      </p>
+    </header>
+
+    <!-- LIVE COUNTDOWN SECTION -->
+    <section class="countdowns-section">
+      <div class="countdowns-grid">
+        
+        <!-- COUNTDOWN 1: DEADLINE -->
+        <div class="countdown-card deadline">
+          <span class="badge">Action Required</span>
+          <div class="countdown-title">Google Form Registration Deadline</div>
+          <div class="countdown-desc">Closes: September 30, 2026 (23:59 JST)</div>
+          <div id="timer-deadline" class="timer-units">
+            <div class="timer-box"><div id="d1-days" class="timer-num">--</div><div class="timer-lbl">Days</div></div>
+            <div class="timer-box"><div id="d1-hours" class="timer-num">--</div><div class="timer-lbl">Hours</div></div>
+            <div class="timer-box"><div id="d1-mins" class="timer-num">--</div><div class="timer-lbl">Mins</div></div>
+            <div class="timer-box"><div id="d1-secs" class="timer-num">--</div><div class="timer-lbl">Secs</div></div>
+          </div>
+          <div id="deadline-expired" class="expired-box" style="display:none;">Registration Closed</div>
+        </div>
+
+        <!-- COUNTDOWN 2: EVENT -->
+        <div class="countdown-card event">
+          <span class="badge">Conference Opening</span>
+          <div class="countdown-title">Event Kick-off in Tokyo</div>
+          <div class="countdown-desc">Regional Meeting &amp; Celebration</div>
+          <div id="timer-event" class="timer-units">
+            <div class="timer-box"><div id="d2-days" class="timer-num">--</div><div class="timer-lbl">Days</div></div>
+            <div class="timer-box"><div id="d2-hours" class="timer-num">--</div><div class="timer-lbl">Hours</div></div>
+            <div class="timer-box"><div id="d2-mins" class="timer-num">--</div><div class="timer-lbl">Mins</div></div>
+            <div class="timer-box"><div id="d2-secs" class="timer-num">--</div><div class="timer-lbl">Secs</div></div>
+          </div>
+          <div id="event-expired" class="expired-box" style="display:none;">Event in Progress!</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- REGISTRATION CTA -->
+    <div class="cta-banner">
+      <!-- Cambia el link por la URL de tu Google Form -->
+      <a href="#register" class="btn-register">Register via Google Form &rarr;</a>
+      <p class="cta-note">Seats are limited. Complete the form before September 30 to confirm your participation.</p>
+    </div>
+
+    <!-- MAIN CONTENT BODY -->
+    <main class="content-body">
+
+      <!-- ABOUT SECTION -->
+      <section>
+        <h3 class="section-title">About the Regional Meeting</h3>
+        <p class="lead-p">
+          The <strong>MCAA Asia Connect “Konnichiwa Tokyo 2026”</strong> gathers leaders and researchers from the Marie Curie Alumni Association (MCAA) chapters in Japan, India, China, and Southeast Asia, along with delegates from Oceania. Celebrating 30 years of the MCAA, the meeting strengthens Asia-Pacific regional integration, promotes multilateral science diplomacy, bridges Japanese deep-tech startups with academic research, and formalizes our regional governance charter.
+        </p>
+      </section>
+
+      <!-- CONFIRMED SPEAKERS -->
+      <section>
+        <h3 class="section-title">Confirmed Keynote Speakers &amp; Stakeholders</h3>
+        <div class="speakers-grid">
+
+          <div class="speaker-card">
+            <div class="speaker-icon">GB</div>
+            <div class="speaker-info">
+              <h4>Dr. Gijs Berends</h4>
+              <div class="speaker-role">Head of Science, Innovation &amp; Digital Policies</div>
+              <div class="speaker-affil">Delegation of the European Union to Japan</div>
+            </div>
+          </div>
+
+          <div class="speaker-card">
+            <div class="speaker-icon">TE</div>
+            <div class="speaker-info">
+              <h4>Dr. Twan van Erp</h4>
+              <div class="speaker-role">Counsellor &amp; Head of Research and Innovation</div>
+              <div class="speaker-affil">Delegation of the European Union to India &amp; Bhutan</div>
+            </div>
+          </div>
+
+          <div class="speaker-card">
+            <div class="speaker-icon">FO</div>
+            <div class="speaker-info">
+              <h4>Dr. Fumiko Oda</h4>
+              <div class="speaker-role">National Contact Point (NCP)</div>
+              <div class="speaker-affil">Horizon Europe / MSCA Japan</div>
+            </div>
+          </div>
+
+          <div class="speaker-card">
+            <div class="speaker-icon">JM</div>
+            <div class="speaker-info">
+              <h4>Judit Erika Magyar</h4>
+              <div class="speaker-role">Country Representative</div>
+              <div class="speaker-affil">EURAXESS Japan &amp; MSCA GloPol Project</div>
+            </div>
+          </div>
+
+          <div class="speaker-card">
+            <div class="speaker-icon">FM</div>
+            <div class="speaker-info">
+              <h4>Prof. Dr. Fan Mo</h4>
+              <div class="speaker-role">MCAA Board Member</div>
+              <div class="speaker-affil">MCAA China Chapter</div>
+            </div>
+          </div>
+
+          <div class="speaker-card">
+            <div class="speaker-icon">EO</div>
+            <div class="speaker-info">
+              <h4>Prof. Dr. Eugenio Otal</h4>
+              <div class="speaker-role">MCAA Board Member</div>
+              <div class="speaker-affil">MCAA Japan Chapter</div>
+            </div>
+          </div>
+
+          <div class="speaker-card">
+            <div class="speaker-icon">NP</div>
+            <div class="speaker-info">
+              <h4>Dr. Norbert Preining</h4>
+              <div class="speaker-role">Tech Scaling &amp; Innovation Lead</div>
+              <div class="speaker-affil">Mercari, Inc. (Japan's First Unicorn)</div>
+            </div>
+          </div>
+
+          <div class="speaker-card">
+            <div class="speaker-icon">LN</div>
+            <div class="speaker-info">
+              <h4>Leave a Nest Co., Ltd.</h4>
+              <div class="speaker-role">Deep-Tech Ecosystem Builders</div>
+              <div class="speaker-affil">Knowledge Manufacturing &amp; Incubation (Tokyo)</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 2-DAY AGENDA -->
+      <section>
+        <h3 class="section-title">Conference Program</h3>
+
+        <!-- Day Selector Tabs -->
+        <div class="agenda-nav">
+          <div class="agenda-tab-btn active" onclick="switchDay(1)">Day 1: Strategy, 30th Anniversary &amp; Innovation</div>
+          <div class="agenda-tab-btn" onclick="switchDay(2)">Day 2: Science Diplomacy, Regional Strategy &amp; Site Visit</div>
+        </div>
+
+        <!-- DAY 1 TIMELINE -->
+        <div id="day1" class="agenda-day active">
+          <div class="agenda-day-theme">Day 1 Focus: Science Diplomacy, 30th Anniversary Celebration, Innovation &amp; Japanese Ecosystem</div>
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="timeline-time">09:00 - 10:00</div>
+              <div class="timeline-content">
+                <h5>Registration &amp; Badge Pick-up</h5>
+                <div class="timeline-details">Check-in at reception. Participants deposit traditional regional snacks brought from their home countries for the afternoon exchange.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item highlight">
+              <div class="timeline-time">10:00 - 10:30</div>
+              <div class="timeline-content">
+                <h5>Opening Ceremony &amp; MCAA 30th Anniversary Celebration</h5>
+                <div class="timeline-speaker">Prof. Dr. Eugenio Otal (MCAA Board) &amp; Regional Chapter Chairs</div>
+                <div class="timeline-details">Commemoration of 30 years of MCAA; international milestones, researcher impact, and network consolidation.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item highlight">
+              <div class="timeline-time">10:30 - 11:15</div>
+              <div class="timeline-content">
+                <h5>High-Level EU Diplomacy Keynotes</h5>
+                <div class="timeline-speaker">Dr. Gijs Berends (EU Delegation to Japan) &amp; Dr. Twan van Erp (EU Delegation to India &amp; Bhutan)</div>
+                <div class="timeline-details">Multilateral EU-Asia scientific diplomacy, green/digital transitions, and bilateral research priorities.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item highlight">
+              <div class="timeline-time">11:15 - 12:00</div>
+              <div class="timeline-content">
+                <h5>Stakeholder Integration: Horizon Europe &amp; GloPol</h5>
+                <div class="timeline-speaker">Dr. Fumiko Oda (NCP Japan) &amp; Judit Erika Magyar (EURAXESS Japan / GloPol)</div>
+                <div class="timeline-details">Horizon Europe Pillar II opportunities, Japan as an Associated Country, and MSCA mobility mechanisms.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item break">
+              <div class="timeline-time">12:00 - 13:00</div>
+              <div class="timeline-content">
+                <h5>Seated Networking Lunch (Japanese Bento Boxes)</h5>
+                <div class="timeline-details">Curated Bento Boxes served in a seated networking format with themed tables (Deep Tech, Life Sciences, Climate, AI).</div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-time">13:00 - 13:20</div>
+              <div class="timeline-content">
+                <h5>Official 30th Anniversary Group Photo</h5>
+                <div class="timeline-details">Commemorative photograph with all delegates, keynote speakers, and chapter representatives.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item highlight">
+              <div class="timeline-time">13:20 - 14:45</div>
+              <div class="timeline-content">
+                <h5>Innovation Ecosystem, Startups &amp; Venture Creation</h5>
+                <div class="timeline-speaker">Leave a Nest Tokyo &amp; Dr. Norbert Preining (Mercari)</div>
+                <div class="timeline-details">Deep-tech knowledge manufacturing, scaling up in Tokyo (Japan's first unicorn), and career transition for PhDs into tech entrepreneurship.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item break">
+              <div class="timeline-time">14:45 - 15:30</div>
+              <div class="timeline-content">
+                <h5>Coffee Break &amp; Cultural Hometown Snack Exchange</h5>
+                <div class="timeline-details">Afternoon coffee and tea paired with regional sweets and snacks brought by delegates from their home countries.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-time">15:30 - 17:00</div>
+              <div class="timeline-content">
+                <h5>Scientific Lightning Talks &amp; Institutional Showcases</h5>
+                <div class="timeline-speaker">MCAA Fellows &amp; University Delegates</div>
+                <div class="timeline-details">Rapid-fire research presentations (3-5 min each) highlighting breakthrough projects and cross-chapter pitches.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-time">17:00 - 17:15</div>
+              <div class="timeline-content">
+                <h5>Day 1 Synthesis &amp; Briefing</h5>
+                <div class="timeline-details">Summary of Day 1 outcomes and logistics for the cultural activity and dinner.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-time">17:30 - 19:00</div>
+              <div class="timeline-content">
+                <h5>Tokyo Cultural Walk</h5>
+                <div class="timeline-details">Guided neighborhood exploration visiting historical and cultural spots.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item break">
+              <div class="timeline-time">19:15 - 21:30</div>
+              <div class="timeline-content">
+                <h5>Networking Dinner: Traditional Tokyo Monjayaki</h5>
+                <div class="timeline-details">Interactive hotplate-grill dining experience (もんじゃ焼き) for peer networking and celebratory toasts.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- DAY 2 TIMELINE -->
+        <div id="day2" class="agenda-day">
+          <div class="agenda-day-theme">Day 2 Focus: Third Countries, Regional Strategy, Tokyo Roadmap &amp; Leave a Nest HQ Visit</div>
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="timeline-time">09:00 - 09:15</div>
+              <div class="timeline-content">
+                <h5>Day 2 Opening Remarks</h5>
+                <div class="timeline-details">Recap of Day 1 and briefing on strategic governance sessions.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item highlight">
+              <div class="timeline-time">09:15 - 10:15</div>
+              <div class="timeline-content">
+                <h5>Global Perspectives: Third Countries &amp; Science Diplomacy</h5>
+                <div class="timeline-speaker">International Delegations (India, Argentina, Regional Partners)</div>
+                <div class="timeline-details">Global outreach of MSCA beyond Europe, South-South cooperation, talent retention, and brain circulation.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item break">
+              <div class="timeline-time">10:15 - 10:45</div>
+              <div class="timeline-content">
+                <h5>Extended Morning Coffee &amp; Networking Break</h5>
+                <div class="timeline-details">Informal discussions, bilateral meetups, and transition into working groups.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item highlight">
+              <div class="timeline-time">10:45 - 12:00</div>
+              <div class="timeline-content">
+                <h5>MCAA Asia-Pacific Chairs Round Table</h5>
+                <div class="timeline-speaker">Chapter Chairs: Japan, India, China, Southeast Asia, Oceania</div>
+                <div class="timeline-details">Strategic coordination: Defining permanent governance, joint grant proposals, cross-chapter mentorship, and 2027 host designation.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item break">
+              <div class="timeline-time">12:00 - 13:00</div>
+              <div class="timeline-content">
+                <h5>Seated Networking Lunch (Japanese Bento Boxes)</h5>
+                <div class="timeline-details">Bento Box lunch and peer discussions prior to departing for the site visit.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item highlight">
+              <div class="timeline-time">13:00 - 13:30</div>
+              <div class="timeline-content">
+                <h5>Plenary Wrap-Up &amp; Tokyo 2026 Roadmap Adoption</h5>
+                <div class="timeline-details">Presentation of agreed action items, formal adoption of the Tokyo Roadmap, and concluding remarks.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-time">13:30 - 14:15</div>
+              <div class="timeline-content">
+                <h5>Transit to Iidabashi</h5>
+                <div class="timeline-details">Group transit via Tokyo Metro to Leave a Nest Headquarters.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item highlight">
+              <div class="timeline-time">14:30 - 16:30</div>
+              <div class="timeline-content">
+                <h5>Site Visit: Leave a Nest Headquarters (Iidabashi)</h5>
+                <div class="timeline-speaker">Leave a Nest Leadership &amp; Startup Founders (TBC)</div>
+                <div class="timeline-details">Tour of incubation prototyping labs, discussion on science entrepreneurship, and Q&amp;A with deep-tech founders.</div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-time">16:30</div>
+              <div class="timeline-content">
+                <h5>Official Adjournment</h5>
+                <div class="timeline-details">Closing of the regional meeting and bilateral informal departures.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- DELIVERABLES / OUTCOMES -->
+      <section>
+        <h3 class="section-title">Expected Strategic Outcomes</h3>
+        <ul class="outcomes-list">
+          <li>
+            <strong>Tokyo 2026 Action Roadmap</strong>
+            Consolidation of the Asia-Pacific regional structure, formalizing bylaws, joint initiatives, and rotating secretariat.
+          </li>
+          <li>
+            <strong>Horizon Europe Direct Pathways</strong>
+            Clear action routes for Asian institutions to engage in Pillar II and MSCA Staff Exchanges via NCP Japan and EURAXESS.
+          </li>
+          <li>
+            <strong>Deep-Tech Translation Ecosystem</strong>
+            Direct connections between academic researchers, Leave a Nest incubation pipelines, and startup scale-up models.
+          </li>
+        </ul>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p><strong>Marie Curie Alumni Association (MCAA) &bull; Asia Connect 2026</strong></p>
+      <p>Organized by MCAA Japan Chapter in partnership with India, China, Southeast Asia &amp; Oceania Chapters.</p>
+      <p style="margin-top: 8px;"><a href="#register">Register before September 30, 2026 &rarr;</a></p>
+    </footer>
+
+  </div>
+
+  <!-- SCRIPT FOR TABS & COUNTDOWNS -->
+  <script>
+    // Tab switching logic
+    function switchDay(day) {
+      document.querySelectorAll('.agenda-tab-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === day - 1);
+      });
+      document.getElementById('day1').classList.toggle('active', day === 1);
+      document.getElementById('day2').classList.toggle('active', day === 2);
+    }
+
+    // Live Countdowns (Japan Standard Time: UTC+9)
+    const DEADLINE = new Date("2026-09-30T23:59:59+09:00").getTime();
+    const EVENT_START = new Date("2026-11-15T09:00:00+09:00").getTime();
+
+    function updateCountdowns() {
+      const now = new Date().getTime();
+
+      // Deadline calculation
+      const d1 = DEADLINE - now;
+      if (d1 <= 0) {
+        document.getElementById('timer-deadline').style.display = 'none';
+        document.getElementById('deadline-expired').style.display = 'block';
+      } else {
+        document.getElementById('d1-days').innerText = Math.floor(d1 / (1000 * 60 * 60 * 24));
+        document.getElementById('d1-hours').innerText = Math.floor((d1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById('d1-mins').innerText = Math.floor((d1 % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById('d1-secs').innerText = Math.floor((d1 % (1000 * 60)) / 1000);
+      }
+
+      // Event calculation
+      const d2 = EVENT_START - now;
+      if (d2 <= 0) {
+        document.getElementById('timer-event').style.display = 'none';
+        document.getElementById('event-expired').style.display = 'block';
+      } else {
+        document.getElementById('d2-days').innerText = Math.floor(d2 / (1000 * 60 * 60 * 24));
+        document.getElementById('d2-hours').innerText = Math.floor((d2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById('d2-mins').innerText = Math.floor((d2 % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById('d2-secs').innerText = Math.floor((d2 % (1000 * 60)) / 1000);
+      }
+    }
+
+    updateCountdowns();
+    setInterval(updateCountdowns, 1000);
+  </script>
+
+</body>
+</html>
