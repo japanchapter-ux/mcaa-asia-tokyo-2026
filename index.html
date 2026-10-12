@@ -296,6 +296,42 @@
       background: #960024;
     }
 
+    .btn-disabled {
+      background: #94a3b8 !important;
+      color: #ffffff !important;
+      cursor: not-allowed;
+      box-shadow: none !important;
+      pointer-events: none;
+    }
+
+    .badge-closed {
+      display: inline-block;
+      background: #fee2e2;
+      color: #991b1b;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+
+    .badge-online {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+
     .cta-note {
       font-size: 12px;
       color: var(--text-muted);
@@ -825,18 +861,18 @@
     <section class="countdowns-section">
       <div class="countdowns-grid">
         
-        <!-- COUNTDOWN 1: DEADLINE -->
+        <!-- COUNTDOWN 1: DEADLINE (ONLINE ATTENDEES) -->
         <div class="countdown-card deadline">
-          <span class="badge">Action Required</span>
-          <div class="countdown-title">Registration Deadline</div>
-          <div class="countdown-desc">Closes: October 23, 2026 (23:59 JST)</div>
+          <span class="badge" style="background: rgba(22, 101, 52, 0.15); color: #166534;">Online Participation Open</span>
+          <div class="countdown-title">General Attendees (Online)</div>
+          <div class="countdown-desc">Closes: October 23, 2026 (23:59 JST) &bull; Online Mode Only</div>
           <div id="timer-deadline" class="timer-units">
             <div class="timer-box"><div id="d1-days" class="timer-num">--</div><div class="timer-lbl">Days</div></div>
             <div class="timer-box"><div id="d1-hours" class="timer-num">--</div><div class="timer-lbl">Hours</div></div>
             <div class="timer-box"><div id="d1-mins" class="timer-num">--</div><div class="timer-lbl">Mins</div></div>
             <div class="timer-box"><div id="d1-secs" class="timer-num">--</div><div class="timer-lbl">Secs</div></div>
           </div>
-          <div id="deadline-expired" class="expired-box" style="display:none;">Registration Closed</div>
+          <div id="deadline-expired" class="expired-box" style="display:none;">Online Registration Closed</div>
         </div>
 
         <!-- COUNTDOWN 2: EVENT -->
@@ -859,39 +895,40 @@
     <!-- REGISTRATION CTA (MICROSOFT FORMS) -->
     <div class="cta-banner" id="register">
       <h3 class="cta-title">Registration &amp; Participation</h3>
-      <p class="cta-subtitle">Please select the registration form corresponding to your affiliation:</p>
+      <p class="cta-subtitle">Please note registration status by category below:</p>
 
       <div class="buttons-grid">
-        <!-- BUTTON 1: ORGANIZING COMMITTEE -->
-        <div class="btn-card mcaa-card">
+        <!-- BUTTON 1: ORGANIZING COMMITTEE & CHAPTER DELEGATES (CLOSED) -->
+        <div class="btn-card mcaa-card" style="opacity: 0.82; border-color: #cbd5e1; background: #f8fafc;">
           <div>
-            <div class="card-label">Organizing Committee</div>
-            <div class="card-desc">For MCAA Chapters: China, India, Japan and MSCA-GLOPOL, in partnership with Southeast Asia and Oceania.</div>
+            <div class="card-label" style="color: #64748b;">
+              Chapter Delegates &amp; Committee <span class="badge-closed">Closed (Oct 9)</span>
+            </div>
+            <div class="card-desc">Registration for official Chapter Delegates (China, India, Japan, Southeast Asia, Oceania) and MSCA-GLOPOL closed on October 9, 2026.</div>
           </div>
-          <a href="https://forms.cloud.microsoft/r/yubbRUWGQ1?origin=lprLink" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             class="btn-cta btn-mcaa">
-            Organizing Committee Registration &rarr;
-          </a>
+          <span class="btn-cta btn-disabled">
+            Registration Closed &times;
+          </span>
         </div>
 
-        <!-- BUTTON 2: GENERAL ATTENDEES -->
-        <div class="btn-card guest-card">
+        <!-- BUTTON 2: GENERAL ATTENDEES (OPEN - ONLINE MODE ONLY) -->
+        <div class="btn-card guest-card" style="border: 2px solid var(--japan-red); box-shadow: 0 4px 16px rgba(188, 0, 45, 0.12);">
           <div>
-            <div class="card-label">External Guests &amp; General Public</div>
-            <div class="card-desc">For institutional representatives, European researchers in Japan, university delegates, startups, and guests.</div>
+            <div class="card-label">
+              General Attendees <span class="badge-online">🟢 Open &bull; Online Mode Only</span>
+            </div>
+            <div class="card-desc">In-person capacity in Tokyo is fully booked. Registration is open until October 23, 2026 for <strong>Online Streaming</strong> (Zoom/Teams livestream &amp; interactive Q&amp;A).</div>
           </div>
           <a href="https://forms.cloud.microsoft/r/pJaHpBLtMG?origin=lprLink" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="btn-cta btn-guest">
-            General Attendees Registration &rarr;
+            Register for Online Attendance (Free) &rarr;
           </a>
         </div>
       </div>
 
-      <p class="cta-note">Seats are limited. Registration deadline: <strong>October 23, 2026 (23:59 JST)</strong> for General Attendees.</p>
+      <p class="cta-note">In-person delegate registration closed on October 9. General attendees online registration deadline: <strong>October 23, 2026 (23:59 JST)</strong>.</p>
     </div>
 
     <!-- MAIN CONTENT BODY -->
